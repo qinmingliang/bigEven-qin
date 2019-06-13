@@ -44,7 +44,7 @@
         <div class="user_center_link">
             <a href="user.html" onclick="setMenu(3,0)" target="main_frame">个人中心</a>
             <img src="images/2.jpg" alt="person">
-            <a href="#"><i class="iconfont icon-tuichu"></i> 退出</a>
+            <a href="#" id= "btn_logout"><i class="iconfont icon-tuichu"></i> 退出</a>
         </div>
     </div>
 
@@ -103,6 +103,26 @@
         }
 
     </script>
+     <script>
+       $(function(){
+           $('#btn_logout').on('click',function(){
+               $.ajax({
+                   type : 'post',
+                   url : "https://autumnfish.cn/big/admin/logout",
+                   success : function(backData){
+                      console.log(backData);
+                      if(backData.code == 200){
+                          window.location.href = './login.html';
+                      }else{
+                          alert('退出失败');
+                      }
+                   }
+               })
+           })
 
+       })
+     
+     
+     </script>
 </body>
 </html>

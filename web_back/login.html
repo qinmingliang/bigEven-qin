@@ -9,6 +9,18 @@
     <link rel="stylesheet" type="text/css" href="css/reset.css">
     <link rel="stylesheet" type="text/css" href="css/iconfont.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
+    <style>
+     .text{
+         color:red;
+         font-size: 12px;
+         position:absolute;
+         top:128px;
+         right: 35px;
+         display: none;
+     }
+    
+    
+    </style>
 </head>
 
 <body>
@@ -25,12 +37,51 @@
                 <i class="iconfont icon-key"></i>
                 <input type="text" class="input_txt" placeholder="邮箱/手机号">
                 <input type="password" class="input_pass" placeholder="密码">
+                <span class="text">账户或密码不能为空</span>
                 <input type="submit" class="input_sub" value="登 录">
+               
             </form>
         </div>
 
-    </div> 
+    </div>
+    <script src="./js/jquery-1.12.4.min.js"></script>
+    <script>
+        $(function () {
+            $('.input_sub').on('click', function (e) {
+                e.preventDefault();
+                 var userName = $('.input_txt').val().trim();
+                 var passWord = $('.input_pass').val().trim();
+                 if(userName == ''|| passWord == ''){
+                    //  alert('账户或密码不能为空');
+                    $('.text').text('账户或密码不能为空').show();
+                     return;
+                 }
+                 $.ajax({
+                     type : 'post',
+                     url : 'https://autumnfish.cn/big/admin/login',
+                     data : {
+                         user_name : userName,
+                         password : passWord
+                     },
+                     success : function(backData){
+                         if(backData.code == 200){
+                             window.location.href = './index.html';
+                         }else{
+                            //  alert('童鞋,你的账户或密码错误')
+                            $('.text').text('童鞋,你的账户或密码错误,请重新输入').show();
+                         }
+                     }
+                 })
+            })
+            $('.input_txt').on('focus',function(){
+                $('.text').hide()
+            });
+            $('.input_pass').on('focus',function(){
+                $('.text').hide()
+            });
+        })
 
+    </script>
 </body>
 
 </html>
