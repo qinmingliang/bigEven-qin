@@ -22,21 +22,21 @@
         <div class="container-fluid common_con">
             <form class="form-horizontal article_form">
                 <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">用户名称：</label>
+                    <label for="inputEmail3" class="col-sm-2 control-label ">用户名称：</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" id="inputEmail3" value="李思思">
+                        <input type="text" class="form-control  username" id="inputEmail30" value="李思思">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">昵称：</label>
+                    <label for="inputEmail3" class="col-sm-2 control-label ">昵称：</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" id="inputEmail3" value="思思">
+                        <input type="text" class="form-control nickname" id="inputEmail31" value="思思">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">邮箱：</label>
+                    <label for="inputEmail3" class="col-sm-2 control-label ">邮箱：</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" id="inputEmail3" value="lisisi@126.com">
+                        <input type="text" class="form-control email" id="inputEmail32" value="lisisi@126.com">
                     </div>
                 </div>
                 
@@ -51,7 +51,7 @@
                 <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 control-label">密码：</label>
                         <div class="col-sm-4">
-                            <input type="password" class="form-control" id="inputEmail3" value="12345678">
+                            <input type="password" class="form-control password" id="inputEmail33" value="12345678">
                         </div>
                     </div>
                
@@ -65,6 +65,27 @@
         </div>
     </div>
 
+  <script>
+     $(function(){
+           $.ajax({
+               type : 'get',
+               url : 'http://localhost:8000/admin/userinfo_get',
+               success : function(backData){
+                console.log(backData.data);
+                if(backData.code == 200){
+                    for(var key in backData.data){  
+                        
+                       $('input.'+ key).val(backData.data[key]);
+                   }
+                   $('img.user_pic').attr('src',backData.data.user_pic)
+                }
+            }  
+           })
+
+     })
+    
+  
+  </script>
 </body>
 
 </html>
