@@ -53,7 +53,6 @@
     </div>
 
 
-
     <script>
         var $level01 = $('.level01');
         var $subli = $('.level02 li')
@@ -119,7 +118,6 @@
                    type : 'post',
                    url : "https://autumnfish.cn/big/admin/logout",
                    success : function(backData){
-                      console.log(backData);
                       if(backData.code == 200){
                           window.location.href = './login.html';
                       }else{
@@ -128,9 +126,6 @@
                    }
                })
            })
-
-
-             
 
        })
      

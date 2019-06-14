@@ -24,19 +24,19 @@
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label ">用户名称：</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control  username" id="inputEmail30" value="李思思">
+                        <input type="text" name="username" class="form-control  username" id="inputEmail30" value="李思思">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label ">昵称：</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control nickname" id="inputEmail31" value="思思">
+                        <input type="text" name="nickname" class="form-control nickname" id="inputEmail31" value="思思">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label ">邮箱：</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control email" id="inputEmail32" value="lisisi@126.com">
+                        <input type="text" name="email" class="form-control email" id="inputEmail32" value="lisisi@126.com">
                     </div>
                 </div>
                 
@@ -44,14 +44,14 @@
                     <label for="inputPassword3" class="col-sm-2 control-label">用户图标：</label>
                     <div class="col-sm-10">
                         <img src="images/2.jpg" alt="" class="user_pic">
-                        <input type="file" id="exampleInputFile">
+                        <input type="file" name="user_pic" id="exampleInputFile">
                     </div>
                 </div>
 
                 <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 control-label">密码：</label>
                         <div class="col-sm-4">
-                            <input type="password" class="form-control password" id="inputEmail33" value="12345678">
+                            <input type="password" name="password" class="form-control password" id="inputEmail33" value="12345678">
                         </div>
                     </div>
                
@@ -64,14 +64,13 @@
             </form>
         </div>
     </div>
-
   <script>
      $(function(){
-           $.ajax({
+         function getUserMsa(){
+            $.ajax({
                type : 'get',
                url : 'http://localhost:8000/admin/userinfo_get',
                success : function(backData){
-                console.log(backData.data);
                 if(backData.code == 200){
                     for(var key in backData.data){  
                         
@@ -81,7 +80,30 @@
                 }
             }  
            })
+         }
+         $('#exampleInputFile').on('change',function(){
+             var url = URL.createObjectURL(this.files[0]);
+             $('.user_pic').attr('src',url);
+         })
+         getUserMsa()
 
+         $('.btn-success').on('click',function(e){
+             e.preventDefault();
+             console.log($('.article_form')[0]);
+             var formData = new FormData($('.article_form')[0]);
+             $.ajax({
+                 type : 'post',
+                 url : 'http://localhost:8000/admin/userinfo_edit',
+                 data : formData,
+                 contentType : false,
+                 processData : false,
+                 success : function(backData){
+                     if(backData.code == 200){
+                        alert('修改成功')
+                     }
+                 }
+             })
+         })
      })
     
   
