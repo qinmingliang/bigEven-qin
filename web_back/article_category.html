@@ -177,7 +177,6 @@
                         url : 'http://localhost:8000/admin/category_edit',
                         data : str,
                         success : function(backData){
-                            console.log(backData);
                             if(backData.code == 200){
                                 getArticleCategory();
                             }
@@ -240,7 +239,7 @@
                 var articleName = $(this).parent().siblings('td').eq(0).text();
                 var articleNickName = $(this).parent().siblings('td').eq(1).text();
                 $('#recipient-name').val(articleName);
-                $('#recipient-nickName').val(articleNickName)
+                $('#recipient-nickName').val(articleNickName);
 
             })
         })
