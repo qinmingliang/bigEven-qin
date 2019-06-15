@@ -89,14 +89,14 @@
                 </div>
                 <div class="modal-body">
                     <form>
-                        <input type="hidden" id='article_ID'>
+                        <input type="hidden" id='article_ID' name="id">
                         <div class="form-group">
                             <label for="recipient-name" class="control-label">分类名称:</label>
-                            <input type="text" class="form-control" id="recipient-name">
+                            <input type="text" class="form-control" id="recipient-name" name="name">
                         </div>
                         <div class="form-group">
                             <label for="message-text" class="control-label">分类别名:</label>
-                            <input type="text" class="form-control" id="recipient-nickName">
+                            <input type="text" class="form-control" id="recipient-nickName" name="slug">
                         </div>
                     </form>
                 </div>
@@ -163,31 +163,39 @@
             //点击弹框里的新增按钮
             $('.btn-primary').on('click', function () {
                 //将文章ID添加到input中
-                var articleName = $('#recipient-name').val();
-                var recipient_name = $('#recipient-nickName').val();
-                var article_ID = $('#article_ID').val();
+                // var articleName = $('#recipient-name').val();
+                // var recipient_name = $('#recipient-nickName').val();
+                // var article_ID = $('#article_ID').val();
+               
+                var str = $('form').serialize();
+                console.log(str);
                 if ($(this).hasClass('btn-success')) {
-                   var str = $('form').serialize();
+                  
+                   console.log(111);
                     $.ajax({
-                        
+                        type:'post',
+                        url : 'http://localhost:8000/admin/category_edit',
+                        data : str,
+                        success : function(backData){
+                            console.log(backData);
+                            if(backData.code == 200){
+                                getArticleCategory();
+                            }
+                        }
                     })
                 } else {
                     $.ajax({
                         type: 'post',
                         url: 'http://localhost:8000/admin/category_add',
-                        data: {
-                            name: articleName,
-                            slug: recipient_name
-                        },
+                        data : str,
                         success: function (backData) {
                             if (backData.code == 200) {
                                 getArticleCategory()
-                                $('#recipient-name').val(articleName);
-                                $('#recipient-nickNamee').val(recipient_name);
                             }
                         }
                     })
                 }
+                $('#addModal').modal('hide');
             });
             //委托给delete按钮注册点击事件
             $('tbody').on('click', '.btn-delete', function () {
